@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-sample-frontend
+  labels:
+    app: nodejs-sample
+    tier: frontend
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-sample
+      tier: frontend
+  template:
+    metadata:
+      labels:
+        app: nodejs-sample
+        tier: frontend
+    spec:
+      containers:
+      - name: frontend
+        image: nodejs-sample-frontend
+        ports:
+        - name: http-server
+          containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+        - name: SAMPLE_API_ADDRESS
+          value: nodejs-sample-backend:8080
